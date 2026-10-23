@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Maison Muse</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"><link rel="stylesheet" href="style.css"></head>
+<body><script src="data.js"></script><script src="shared.js"></script><script>
+const m=MODELS.find(x=>x.id===new URLSearchParams(location.search).get("id"))||MODELS[0],cat=CATEGORIES.find(c=>c.id===m.category);
+layout("models.html",`<div class="prof">${photo(m)}<div><p class="loc">${cat.name} · ${m.location}</p><h1>${m.name}, ${m.age}</h1><p>${m.about}</p>
+<h4>${SITE.servicesLabel}</h4><ul>${m.services.map(s=>`<li>${s}</li>`).join("")}</ul><h4>Hourly rates</h4><table class="rt">${ratesOf(m).map(r=>`<tr><td>${r[0]}</td><td>${inr(r[1])}</td></tr>`).join("")}</table>${actions(m)}</div></div>
+<section><h2>More profiles</h2><div class="grid">${MODELS.filter(x=>x.id!==m.id&&x.category===m.category).concat(MODELS.filter(x=>x.id!==m.id&&x.category!==m.category)).slice(0,3).map(card).join("")}</div></section>`);
+</script></body></html>

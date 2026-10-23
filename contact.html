@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Maison Muse</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"><link rel="stylesheet" href="style.css"></head>
+<body><script src="data.js"></script><script src="shared.js"></script><script>
+layout("contact.html",head(SITE.contactTitle,SITE.contactQuote)+`<section><div class="two"><div>
+<div class="info-line"><b>Phone</b>${SITE.phone}</div><div class="info-line"><b>Email</b>${SITE.email}</div><div class="info-line"><b>Address</b>${SITE.address}</div><div class="info-line"><b>Hours</b>${SITE.hours}</div>
+<div class="row" style="margin-top:22px"><a class="btn call" href="tel:+${SITE.phone}">${CALL} ${SITE.callText}</a><a class="btn wa" href="https://wa.me/${SITE.phone}" target="_blank">${WA} ${SITE.whatsappText}</a></div></div>
+<form id="f"><input id="n" placeholder="Your name" required><select id="m"><option value="">Choose a model (optional)</option>${MODELS.map(m=>`<option>${m.name}</option>`).join("")}</select><textarea id="t" rows="5" placeholder="Date, hours, location and details" required></textarea><button class="btn gold">Send on WhatsApp</button></form></div></section>
+<section><h2>Questions</h2>${SITE.faqs.map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("")}</section>`);
+$("f").onsubmit=e=>{e.preventDefault();const s=`Name: ${$("n").value}\nModel: ${$("m").value||"Any"}\n${$("t").value}`;window.open("https://wa.me/"+SITE.phone+"?text="+encodeURIComponent(s))};
+</script></body></html>

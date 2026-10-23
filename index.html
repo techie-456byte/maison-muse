@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Maison Muse</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"><link rel="stylesheet" href="style.css"></head>
+<body><script src="data.js"></script><script src="shared.js"></script><script>
+const F=MODELS.filter(m=>m.featured);
+layout("index.html",`<section class="hero"><div><h1>${SITE.heroTitle}</h1><p>${SITE.heroText}</p><a class="btn gold" href="models.html">View all profiles</a></div><div class="hero-cards">${F.slice(0,3).map(m=>`<div class="hc">${photo(m)}</div>`).join("")}</div></section>
+<div class="stats">${SITE.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("")}</div>
+<section><h2>${SITE.featuredTitle}</h2><p class="sub">${SITE.featuredQuote}</p><div class="grid">${F.map(card).join("")}</div></section>
+<section><h2>${SITE.categoriesTitle}</h2><p class="sub">${SITE.categoriesQuote}</p><div class="cats">${catCards()}</div></section>
+<section><h2>${SITE.locationsTitle}</h2><p class="sub">${SITE.locationsQuote}</p><div class="chips">${locChips()}</div></section>
+<section><h2>How booking works</h2><div class="steps">${SITE.steps.map(s=>`<div class="box"><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("")}</div></section>
+<section><h2>What clients say</h2><div class="revs">${SITE.reviews.map(r=>`<div class="box rev"><p>“${r[0]}”</p><small>${r[1]}</small></div>`).join("")}</div></section>
+<div class="cta"><h2>Ready to book?</h2><p>${SITE.tagline}. Call or message us today.</p><div class="row" style="justify-content:center"><a class="btn call" href="tel:+${SITE.phone}">${CALL} ${SITE.callText}</a><a class="btn wa" href="https://wa.me/${SITE.phone}" target="_blank">${WA} ${SITE.whatsappText}</a></div></div>`);
+</script></body></html>

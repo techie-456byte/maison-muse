@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Maison Muse</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"><link rel="stylesheet" href="style.css"></head>
+<body><script src="data.js"></script><script src="shared.js"></script><script>
+layout("about.html",head(SITE.aboutTitle,SITE.aboutQuote)+`<section><div class="two"><div>${SITE.about.map(p=>`<p>${p}</p>`).join("")}</div><div class="stats" style="padding:0;grid-template-columns:1fr 1fr">${SITE.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("")}</div></div></section>
+<section><h2>Why choose us</h2><div class="vals">${SITE.values.map(v=>`<div class="box"><h3>${v[0]}</h3><p>${v[1]}</p></div>`).join("")}</div></section>`);
+</script></body></html>
