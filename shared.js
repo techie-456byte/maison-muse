@@ -7,16 +7,20 @@ const photo = m => `<div class="ph"><span>${m.name[0]}</span><img src="${m.image
 const actions = m => `<div class="row"><a class="btn call" href="tel:+${m.phone}">${CALL} ${SITE.callText}</a><a class="btn wa" href="https://wa.me/${m.phone}?text=${encodeURIComponent(SITE.whatsappMessage + " " + m.name)}" target="_blank" rel="noopener">${WA} ${SITE.whatsappText}</a></div>`;
 const card = m => `<article class="card"><a class="open" href="profile.html?id=${m.id}">${photo(m)}</a><div class="info"><div class="top"><h3>${m.name}, ${m.age}</h3><div class="rate">${inr(ratesOf(m)[0][1])}<small>${SITE.rateLabel}</small></div></div><p class="loc">${m.location}</p><p class="svc">${m.services.join(", ")}</p>${actions(m)}</div></article>`;
 const head = (t, q) => `<div class="pagehead"><h1>${t}</h1><p>${q}</p></div>`;
-
+ 
 function layout(active, html) {
   const nav = [["index.html", "Home"], ["models.html", "Profiles"], ["categories.html", "Categories"], ["about.html", "About"], ["contact.html", "Contact"]];
   document.body.insertAdjacentHTML("afterbegin", `<header class="nav"><a href="index.html" class="brand">${SITE.brand}</a><nav>${nav.map(n => `<a href="${n[0]}" ${n[0] === active ? 'class="act"' : ""}>${n[1]}</a>`).join("")}</nav></header><main>${html}</main>
   <footer><div class="fgrid"><div><b>${SITE.brand}</b><p>${SITE.tagline}</p><p>${SITE.footerQuote}</p></div><div><h4>Pages</h4>${nav.map(n => `<a href="${n[0]}">${n[1]}</a>`).join("")}</div><div><h4>Contact</h4><p>${SITE.address}</p><p>${SITE.email}</p><p>${SITE.hours}</p></div></div><p class="copy">${SITE.footerText}</p></footer>`);
   document.title = SITE.brand + " | " + nav.find(n => n[0] === active)[1];
-  document.body.insertAdjacentHTML("beforeend", `<div id="age" role="dialog" aria-modal="true"><div class="age-box"><div class="seal">18+</div><h2>${SITE.ageTitle}</h2><p>${SITE.ageText}</p><div class="row"><button class="btn gold" id="ageYes">${SITE.ageYes}</button><a class="btn ghost" href="https://www.google.com">${SITE.ageNo}</a></div></div></div>`);
-  document.body.classList.add("locked");
-  $("ageYes").onclick = () => { $("age").remove(); document.body.classList.remove("locked"); };
+  let ok = false; try { ok = sessionStorage.getItem("ageOk") === "1"; } catch (e) {}
+  if (!ok) {
+    document.body.insertAdjacentHTML("beforeend", `<div id="age" role="dialog" aria-modal="true"><div class="age-box"><div class="seal">18+</div><h2>${SITE.ageTitle}</h2><p>${SITE.ageText}</p><div class="row"><button class="btn gold" id="ageYes">${SITE.ageYes}</button><a class="btn ghost" href="https://www.google.com">${SITE.ageNo}</a></div></div></div>`);
+    document.body.classList.add("locked");
+    $("ageYes").onclick = () => { try { sessionStorage.setItem("ageOk", "1"); } catch (e) {} $("age").remove(); document.body.classList.remove("locked"); };
+  }
   document.addEventListener("click", e => { const t = e.target.closest("[data-go]"); if (t) location.href = t.dataset.go; });
 }
 const catCards = () => CATEGORIES.map(c => `<button class="cat" data-go="models.html?category=${c.id}"><h3>${c.name}</h3><p>${c.text}</p><span>View profiles</span></button>`).join("");
 const locChips = () => LOCATIONS.map(l => `<button class="chip lg" data-go="models.html?location=${encodeURIComponent(l)}">${l}</button>`).join("");
+ 
